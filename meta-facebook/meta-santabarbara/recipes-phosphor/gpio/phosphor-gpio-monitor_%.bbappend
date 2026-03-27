@@ -29,6 +29,9 @@ SERVICE_LIST = "assert-module-power-good@.service \
                 mb-pwr-fault-deassert.service \
                 setup-nic-endpoint-slot@.service \
                 remove-nic-endpoint-slot@.service \
+                log-gpio-reset-btn.service \
+                log-gpio-ac-btn.service \
+                log-gpio-pwr-btn.service \
                 "
 
 SERVICE_FILE_FMT = "file://{0}"

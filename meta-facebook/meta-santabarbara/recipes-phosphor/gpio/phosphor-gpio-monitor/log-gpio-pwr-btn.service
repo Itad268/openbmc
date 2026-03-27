@@ -1,0 +1,9 @@
+[Unit]
+Description=Log Power Button Pressed
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/logger -t pwr-btn "POWER button pressed"
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure

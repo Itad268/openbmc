@@ -363,7 +363,8 @@
                 "deassert-reset-button.service"
             ],
             "FALLING": [
-                "assert-reset-button.service"
+                "assert-reset-button.service",
+                "log-gpio-reset-btn.service"
             ]
         },
         "Continue": true
@@ -597,6 +598,28 @@
             ],
             "FALLING": [
                 "setup-nic-endpoint-slot@4.service"
+            ]
+        },
+        "Continue": true
+    },
+    {
+        "Name": "power-button",
+        "LineName": "power-button",
+        "EventMon": "BOTH",
+        "Targets": {
+            "FALLING": [
+                "log-gpio-pwr-btn.service"
+            ]
+        },
+        "Continue": true
+    },
+    {
+        "Name": "AC_PWR_BMC_BTN_R_N",
+        "LineName": "AC_PWR_BMC_BTN_R_N",
+        "EventMon": "BOTH",
+        "Targets": {
+            "FALLING": [
+                "log-gpio-ac-btn.service"
             ]
         },
         "Continue": true

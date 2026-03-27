@@ -1,0 +1,9 @@
+[Unit]
+Description=Log Reset Button Pressed
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/logger -t reset-btn "RESET button pressed"
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure

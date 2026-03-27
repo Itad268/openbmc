@@ -1,0 +1,9 @@
+[Unit]
+Description=Log AC Button Pressed
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/logger -t ac-btn "AC button pressed"
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure
