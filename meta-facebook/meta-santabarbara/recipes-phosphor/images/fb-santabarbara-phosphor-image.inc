@@ -30,3 +30,6 @@ OBMC_IMAGE_EXTRA_INSTALL:append = " \
 OBMC_IMAGE_EXTRA_INSTALL:append = " \
     plat-svc \
 "
+
+# Add uart-echo service
+OBMC_IMAGE_EXTRA_INSTALL:append = " uart-echo"

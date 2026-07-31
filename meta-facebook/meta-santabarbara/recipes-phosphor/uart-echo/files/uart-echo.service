@@ -1,0 +1,15 @@
+[Unit]
+Description=UART Echo Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/uart-echo
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=uart-echo
+
+[Install]
+WantedBy=multi-user.target
