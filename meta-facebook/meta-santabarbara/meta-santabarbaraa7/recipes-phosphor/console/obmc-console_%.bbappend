@@ -1,8 +1,26 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/obmc-console:"
+
+def fb_get_consoles_usb(d):
+    usbs = d.getVar('OBMC_USB_INSTANCES', True)
+    if not usbs:
+        return ""
+
+    consoles = [f"ttyUSBdevice{int(i)}" for i in range(61)]
+    return " ".join(consoles)
+fb_get_consoles_usb[vardeps] += "OBMC_USB_INSTANCES"
+
+OBMC_CONSOLE_TTYS_USB = "${@fb_get_consoles_usb(d)}"
+OBMC_CONSOLE_TTYS_USB[vardeps] += "fb_get_consoles_usb"
+
+SERVER_CONFS_USB = "${@ ' '.join([ f'file://fb-compute-tray-usb/server.{i}.conf' for i in d.getVar('OBMC_CONSOLE_TTYS_USB', True).split() ])}"
+
+
+OBMC_USB_INSTANCES = "0 1 2 3"
 
 SRC_URI:append = " \
     file://plat-80-obmc-console-uart.rules \
 "
+SRC_URI:append = " ${SERVER_CONFS_USB}"
 
 # For BIOS 2A03/older compatibility
 OBMC_SOL_ROUTING = "uart2:uart3 uart3:uart2"
@@ -10,4 +28,9 @@ OBMC_SOL_ROUTING = "uart2:uart3 uart3:uart2"
 do_install:append() {
     install -d ${D}${base_libdir}/udev/rules.d/
     install -m 0644 ${UNPACKDIR}/plat-80-obmc-console-uart.rules ${D}${base_libdir}/udev/rules.d/80-obmc-console-uart.rules
+
+    for CONSOLE_USB in ${OBMC_CONSOLE_TTYS_USB}
+    do
+        install -m 0644 ${UNPACKDIR}/fb-compute-tray-usb/server.${CONSOLE_USB}.conf ${D}${sysconfdir}/${BPN}/
+    done
 }
